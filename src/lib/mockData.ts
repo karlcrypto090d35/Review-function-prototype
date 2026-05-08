@@ -47,7 +47,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-A',
     jobTitle: '高级前端工程师',
     hrId: 'HR-001',
-    startTime: inPast(60),
+    startTime: FIXED_START_A,
     hrOverallComment: '整体应答流畅，部分关键问题可更具体。',
     agentEvaluation: {
       factualAccuracy: 'normal',
@@ -62,7 +62,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-B',
     jobTitle: 'AI 产品经理',
     hrId: 'HR-002',
-    startTime: inPast(120),
+    startTime: FIXED_START_B,
     hrOverallComment: '部分问题回答偏模板化，建议补充个人案例。',
     agentEvaluation: {
       factualAccuracy: 'abnormal',
@@ -116,7 +116,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-C',
     jobTitle: '后端架构师',
     hrId: 'HR-003',
-    startTime: inPast(60 * 30),
+    startTime: FIXED_START_C,
     hrOverallComment: '应答完整度尚可。',
     agentEvaluation: {
       factualAccuracy: 'normal',
@@ -131,7 +131,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-D',
     jobTitle: '设计师',
     hrId: 'HR-004',
-    startTime: inPast(60 * 5),
+    startTime: FIXED_START_D,
     hrOverallComment: 'Review 已完成,可作为终态回放。',
     agentEvaluation: {
       factualAccuracy: 'normal',
