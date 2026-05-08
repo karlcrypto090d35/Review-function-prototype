@@ -37,6 +37,52 @@ interface ReviewStore extends PersistedState {
   recordComplete: (callId: string) => void;
 }
 
+// Stable empty placeholder so identity is preserved between calls.
+const EMPTY_OBJ: Record<string, never> = {};
+
+// Memoize the assembled Call so the selector returns a stable reference
+// when nothing relevant changed. Without this, every store read produced
+// a fresh Call/entries array, which made `useReviewStore((s) => s.getCall(id))`
+// re-render on every commit and triggered "Maximum update depth exceeded".
+const callMemoCache = new Map<
+  string,
+  {
+    base: Call;
+    status: ReviewStatus;
+    drafts: Record<string, ReviewDraft>;
+    results: Record<string, Entry['markResult']>;
+    value: Call;
+  }
+>();
+
+function getCallMemo(
+  callId: string,
+  base: Call,
+  status: ReviewStatus,
+  drafts: Record<string, ReviewDraft>,
+  results: Record<string, Entry['markResult']>,
+): Call {
+  const cached = callMemoCache.get(callId);
+  if (
+    cached &&
+    cached.base === base &&
+    cached.status === status &&
+    cached.drafts === drafts &&
+    cached.results === results
+  ) {
+    return cached.value;
+  }
+  const isTerminal = status !== 'pending';
+  const entries = base.entries.map((e) => {
+    const draft = isTerminal ? EMPTY_DRAFT : drafts[e.entryId] ?? e.reviewDraft;
+    const finalResult = results[e.entryId] ?? e.markResult;
+    return { ...e, reviewDraft: draft, markResult: finalResult };
+  });
+  const value: Call = { ...base, reviewStatus: status, entries };
+  callMemoCache.set(callId, { base, status, drafts, results, value });
+  return value;
+}
+
 export const useReviewStore = create<ReviewStore>()(
   persist(
     (set, get) => ({
