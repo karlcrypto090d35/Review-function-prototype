@@ -56,18 +56,11 @@ export const useReviewStore = create<ReviewStore>()(
         const base = SCENARIOS[callId];
         if (!base) return null;
         const state = get();
-        // status: terminal status overrides
         const overrideStatus = state.statuses[callId];
         const status: ReviewStatus = overrideStatus ?? base.reviewStatus;
-        const drafts = state.drafts[callId] ?? {};
-        const results = state.results[callId] ?? {};
-        const isTerminal = status !== 'pending';
-        const entries = base.entries.map((e) => {
-          const draft = isTerminal ? { ...EMPTY_DRAFT } : drafts[e.entryId] ?? e.reviewDraft;
-          const finalResult = results[e.entryId] ?? e.markResult;
-          return { ...e, reviewDraft: draft, markResult: finalResult };
-        });
-        return { ...base, reviewStatus: status, entries };
+        const drafts = state.drafts[callId] ?? EMPTY_OBJ;
+        const results = state.results[callId] ?? EMPTY_OBJ;
+        return getCallMemo(callId, base, status, drafts, results);
       },
 
       saveDraft: (callId, entryId, draft) => {
