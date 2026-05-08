@@ -31,6 +31,14 @@ const scenarioAEntries: Entry[] = [
   mkEntry(10, '有什么想问 HR 的?', '想了解团队规模、技术栈以及晋升机制。', null, false),
 ];
 
+// Fixed timestamps to avoid SSR/CSR hydration mismatch
+// (Date.now() at module load differs between server render and client hydration).
+const FIXED_START_A = '2026-05-08T07:00:00.000Z';
+const FIXED_START_B = '2026-05-08T06:00:00.000Z';
+const FIXED_START_C = '2026-04-08T08:00:00.000Z';
+const FIXED_START_D = '2026-05-08T03:00:00.000Z';
+// Deadlines are only used for runtime expiry checks (not rendered),
+// so it's safe to compute them relative to "now" at module load.
 const inFuture = (mins: number) => new Date(Date.now() + mins * 60_000).toISOString();
 const inPast = (mins: number) => new Date(Date.now() - mins * 60_000).toISOString();
 
@@ -39,7 +47,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-A',
     jobTitle: '高级前端工程师',
     hrId: 'HR-001',
-    startTime: inPast(60),
+    startTime: FIXED_START_A,
     hrOverallComment: '整体应答流畅，部分关键问题可更具体。',
     agentEvaluation: {
       factualAccuracy: 'normal',
@@ -54,7 +62,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-B',
     jobTitle: 'AI 产品经理',
     hrId: 'HR-002',
-    startTime: inPast(120),
+    startTime: FIXED_START_B,
     hrOverallComment: '部分问题回答偏模板化，建议补充个人案例。',
     agentEvaluation: {
       factualAccuracy: 'abnormal',
@@ -108,7 +116,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-C',
     jobTitle: '后端架构师',
     hrId: 'HR-003',
-    startTime: inPast(60 * 30),
+    startTime: FIXED_START_C,
     hrOverallComment: '应答完整度尚可。',
     agentEvaluation: {
       factualAccuracy: 'normal',
@@ -123,7 +131,7 @@ export const SCENARIOS: Record<string, Call> = {
     callId: 'call-D',
     jobTitle: '设计师',
     hrId: 'HR-004',
-    startTime: inPast(60 * 5),
+    startTime: FIXED_START_D,
     hrOverallComment: 'Review 已完成,可作为终态回放。',
     agentEvaluation: {
       factualAccuracy: 'normal',

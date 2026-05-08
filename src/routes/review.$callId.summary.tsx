@@ -4,6 +4,12 @@ import { useReviewGuard } from '../hooks/useReviewGuard';
 import { SkipReviewConfirmModal } from '../components/review/SkipReviewConfirmModal';
 import { BAD_TYPE_LABEL } from '../lib/types';
 
+function ClientDate({ iso }: { iso: string }) {
+  const [text, setText] = useState('');
+  useEffect(() => setText(new Date(iso).toLocaleString()), [iso]);
+  return <span suppressHydrationWarning>{text}</span>;
+}
+
 export const Route = createFileRoute('/review/$callId/summary')({
   component: SummaryPage,
 });
@@ -52,7 +58,7 @@ function SummaryPage() {
             <div>
               <h1 className="text-xl font-semibold">{call.jobTitle}</h1>
               <p className="mt-1 text-sm text-muted-foreground">
-                HR {call.hrId} · {new Date(call.startTime).toLocaleString()}
+                HR {call.hrId} · <ClientDate iso={call.startTime} />
               </p>
             </div>
             <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-foreground">
