@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewCallIdSummaryRouteImport } from './routes/review.$callId.summary'
+import { Route as ReviewCallIdDetailRouteImport } from './routes/review.$callId.detail'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewCallIdSummaryRoute = ReviewCallIdSummaryRouteImport.update({
+  id: '/review/$callId/summary',
+  path: '/review/$callId/summary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewCallIdDetailRoute = ReviewCallIdDetailRouteImport.update({
+  id: '/review/$callId/detail',
+  path: '/review/$callId/detail',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/review/$callId/detail': typeof ReviewCallIdDetailRoute
+  '/review/$callId/summary': typeof ReviewCallIdSummaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/review/$callId/detail': typeof ReviewCallIdDetailRoute
+  '/review/$callId/summary': typeof ReviewCallIdSummaryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/review/$callId/detail': typeof ReviewCallIdDetailRoute
+  '/review/$callId/summary': typeof ReviewCallIdSummaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/review/$callId/detail' | '/review/$callId/summary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/review/$callId/detail' | '/review/$callId/summary'
+  id: '__root__' | '/' | '/review/$callId/detail' | '/review/$callId/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReviewCallIdDetailRoute: typeof ReviewCallIdDetailRoute
+  ReviewCallIdSummaryRoute: typeof ReviewCallIdSummaryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +68,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/review/$callId/summary': {
+      id: '/review/$callId/summary'
+      path: '/review/$callId/summary'
+      fullPath: '/review/$callId/summary'
+      preLoaderRoute: typeof ReviewCallIdSummaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review/$callId/detail': {
+      id: '/review/$callId/detail'
+      path: '/review/$callId/detail'
+      fullPath: '/review/$callId/detail'
+      preLoaderRoute: typeof ReviewCallIdDetailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReviewCallIdDetailRoute: ReviewCallIdDetailRoute,
+  ReviewCallIdSummaryRoute: ReviewCallIdSummaryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
