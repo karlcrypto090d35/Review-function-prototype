@@ -73,14 +73,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "AI 分身被调用行为 Review Web端原型" },
+      { name: "description", content: "AI-powered web prototype builder that generates interactive web prototypes from text prompts." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "AI 分身被调用行为 Review Web端原型" },
+      { property: "og:description", content: "AI-powered web prototype builder that generates interactive web prototypes from text prompts." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AI 分身被调用行为 Review Web端原型" },
+      { name: "twitter:description", content: "AI-powered web prototype builder that generates interactive web prototypes from text prompts." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e7f761cd-9a2f-452a-9c45-1dc0830d4eed/id-preview-dbe326a1--1517c180-c8ff-444d-9641-aa813a71e628.lovable.app-1778233891974.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e7f761cd-9a2f-452a-9c45-1dc0830d4eed/id-preview-dbe326a1--1517c180-c8ff-444d-9641-aa813a71e628.lovable.app-1778233891974.png" },
     ],
     links: [
       {
