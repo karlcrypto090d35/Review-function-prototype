@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { BadType, Call, Entry, MemoryPayload, ReviewDraft, ReviewStatus } from './types';
-import { EMPTY_DRAFT } from './types';
-import { SCENARIOS } from './mockData';
+import type { BadType, Call, Entry, MemoryPayload, ReviewDraft, ReviewStatus } from '../lib/types';
+import { EMPTY_DRAFT } from '../lib/types';
+import { SCENARIOS } from '../lib/mockData';
 
 interface PersistedState {
   // per callId draft overrides
