@@ -31,6 +31,14 @@ const scenarioAEntries: Entry[] = [
   mkEntry(10, '有什么想问 HR 的?', '想了解团队规模、技术栈以及晋升机制。', null, false),
 ];
 
+// Fixed timestamps to avoid SSR/CSR hydration mismatch
+// (Date.now() at module load differs between server render and client hydration).
+const FIXED_START_A = '2026-05-08T07:00:00.000Z';
+const FIXED_START_B = '2026-05-08T06:00:00.000Z';
+const FIXED_START_C = '2026-04-08T08:00:00.000Z';
+const FIXED_START_D = '2026-05-08T03:00:00.000Z';
+// Deadlines are only used for runtime expiry checks (not rendered),
+// so it's safe to compute them relative to "now" at module load.
 const inFuture = (mins: number) => new Date(Date.now() + mins * 60_000).toISOString();
 const inPast = (mins: number) => new Date(Date.now() - mins * 60_000).toISOString();
 
