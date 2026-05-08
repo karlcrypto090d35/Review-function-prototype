@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { DevToolbar } from "../components/review/DevToolbar";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
