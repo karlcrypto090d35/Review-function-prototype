@@ -9,9 +9,6 @@ function ClientDate({ iso }: { iso: string }) {
   useEffect(() => setText(new Date(iso).toLocaleString()), [iso]);
   return <span suppressHydrationWarning>{text}</span>;
 }
-import { useReviewGuard } from '../hooks/useReviewGuard';
-import { SkipReviewConfirmModal } from '../components/review/SkipReviewConfirmModal';
-import { BAD_TYPE_LABEL } from '../lib/types';
 
 export const Route = createFileRoute('/review/$callId/summary')({
   component: SummaryPage,
