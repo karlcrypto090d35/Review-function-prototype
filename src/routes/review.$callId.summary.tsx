@@ -58,7 +58,7 @@ function SummaryPage() {
             <div>
               <h1 className="text-xl font-semibold">{call.jobTitle}</h1>
               <p className="mt-1 text-sm text-muted-foreground">
-                HR {call.hrId} · {new Date(call.startTime).toLocaleString()}
+                HR {call.hrId} · <ClientDate iso={call.startTime} />
               </p>
             </div>
             <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-foreground">
